@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Mille - The Dessert Bar</title>
+  <meta name="description" content="Mille - The Dessert Bar. Artisan desserts, specialty coffee, and handcrafted chocolates in Hyderabad.">
+  <meta name="theme-color" content="#964537">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Josefin+Sans:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --terra: #964537;
+      --terra-deep: #7A3628;
+      --terra-light: #A8564A;
+      --blush: #E5C0AD;
+      --blush-light: #F0D5C6;
+      --blush-pale: #F5E6DC;
+      --cream: #FDF5EF;
+      --cream-warm: #F9EDE3;
+      --text-dark: #3A1810;
+      --text-muted: #B89A88;
+
+      --font-display: 'Josefin Sans', 'Helvetica Neue', sans-serif;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Josefin Sans', 'Helvetica Neue', sans-serif;
+
+      --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--cream);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    ::selection { background: var(--terra); color: var(--blush-light); }
+
+    /* ─── NAV ─── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px clamp(20px, 5vw, 48px);
+      padding-top: calc(20px + env(safe-area-inset-top, 0px));
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.4s var(--ease-out);
+    }
+
+    .nav.scrolled {
+      background: rgba(150, 69, 55, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 2px 20px rgba(58, 24, 16, 0.15);
+    }
+
+    .nav-logo-svg { height: 28px; width: auto; transition: all 0.4s ease; color: var(--blush); }
+    .nav-logo-svg:hover { opacity: 0.8; }
+    .nav:not(.scrolled) .nav-logo-svg { color: var(--terra); }
+    .nav.scrolled .nav-logo-svg { color: var(--blush); }
+
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+
+    .nav-links a {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 2px;
+      transition: color 0.25s ease;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .nav:not(.scrolled) .nav-links a { color: var(--terra); }
+    .nav.scrolled .nav-links a { color: var(--blush); }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      transition: width 0.3s ease;
+    }
+
+    .nav:not(.scrolled) .nav-links a::after { background: var(--terra); }
+    .nav.scrolled .nav-links a::after { background: var(--blush); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 8px;
+      min-width: 44px;
+      min-height: 44px;
+      justify-content: center;
+      align-items: center;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .nav-toggle span {
+      width: 22px; height: 1.5px;
+      transition: all 0.3s ease;
+    }
+
+    .nav:not(.scrolled) .nav-toggle span { background: var(--terra); }
+    .nav.scrolled .nav-toggle span { background: var(--blush); }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99;
+      background: var(--terra);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 32px;
+      padding: env(safe-area-inset-top, 20px) 20px env(safe-area-inset-bottom, 20px);
+    }
+
+    .mobile-nav.open { display: flex; }
+
+    .mobile-nav a {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      font-weight: 300;
+      color: var(--blush);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      -webkit-tap-highlight-color: transparent;
+      padding: 8px 16px;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: var(--terra);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 120px clamp(24px, 6vw, 64px) 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 40%, rgba(229, 192, 173, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 60%, rgba(229, 192, 173, 0.04) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-logo {
+      width: clamp(280px, 55vw, 600px);
+      height: auto;
+      opacity: 0;
+      transform: translateY(25px);
+      animation: fadeUp 1.2s var(--ease-out) 0.3s forwards;
+    }
+
+    .hero-logo { color: var(--blush); }
+
+    .hero-line {
+      width: 50px; height: 1px;
+      background: var(--blush);
+      margin: 32px 0 24px;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.8s forwards;
+    }
+
+    .hero-tagline {
+      font-family: var(--font-display);
+      font-size: clamp(0.65rem, 1.2vw, 0.8rem);
+      font-weight: 300;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--blush);
+      opacity: 0.7;
+      opacity: 0;
+      animation: fadeUp 1s ease 1s forwards;
+    }
+
+    .hero-sub {
+      font-family: var(--font-serif);
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--blush-light);
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.2s forwards;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: clamp(24px, 4vh, 48px);
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.6s forwards;
+    }
+
+    .hero-scroll span {
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--blush);
+      opacity: 0.5;
+    }
+
+    .hero-scroll .scroll-line {
+      width: 1px; height: 36px;
+      background: linear-gradient(to bottom, var(--blush), transparent);
+      animation: scrollPulse 2.5s ease infinite;
+    }
+
+    /* ─── SECTIONS ─── */
+    section { padding: clamp(64px, 10vw, 120px) clamp(20px, 5vw, 48px); }
+
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 300;
+      color: var(--terra);
+      line-height: 1.1;
+      margin-bottom: 32px;
+    }
+
+    .section-divider {
+      width: 36px; height: 1px;
+      background: var(--terra);
+      margin-bottom: 32px;
+    }
+
+    /* ─── ABOUT ─── */
+    .about {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .about-text {
+      font-family: var(--font-serif);
+      font-size: clamp(1.15rem, 2.2vw, 1.6rem);
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--text-dark);
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .about-text em { color: var(--terra); font-style: italic; }
+
+    .about-features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-top: 72px;
+    }
+
+    .about-feature h3 {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--terra);
+      margin-bottom: 8px;
+    }
+
+    .about-feature p {
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ─── VISUAL MARQUEE ─── */
+    .marquee-wrap {
+      padding: 0;
+      overflow: hidden;
+      background: var(--terra);
+      position: relative;
+    }
+
+    .marquee {
+      display: flex;
+      white-space: nowrap;
+      animation: marqueeScroll 25s linear infinite;
+      padding: 20px 0;
+    }
+
+    .marquee-item {
+      font-family: var(--font-serif);
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--blush);
+      opacity: 0.6;
+      padding: 0 40px;
+      flex-shrink: 0;
+    }
+
+    .marquee-dot {
+      color: var(--blush);
+      opacity: 0.3;
+      padding: 0 8px;
+      flex-shrink: 0;
+    }
+
+    /* ─── MENU ─── */
+    .menu-section { background: var(--cream-warm); }
+
+    .menu-header { text-align: center; margin-bottom: 64px; }
+
+    .menu-container { max-width: 1100px; margin: 0 auto; }
+
+    .menu-category {
+      margin-bottom: 56px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .menu-category.visible { opacity: 1; transform: translateY(0); }
+
+    .menu-category-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--terra);
+    }
+
+    .menu-category-name {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+      font-weight: 400;
+      color: var(--terra);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .menu-category-note {
+      font-family: var(--font-serif);
+      font-size: 0.9rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text-muted);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 2px 40px;
+    }
+
+    .menu-item {
+      padding: 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: default;
+      transition: all 0.2s ease;
+      border-radius: 4px;
+    }
+
+    .menu-item:hover {
+      padding-left: 12px;
+      background: rgba(150, 69, 55, 0.04);
+    }
+
+    .menu-item-dot {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: var(--terra);
+      flex-shrink: 0;
+      opacity: 0.5;
+    }
+
+    .menu-item-name {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dark);
+    }
+
+    .menu-item-detail {
+      font-family: var(--font-serif);
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--text-muted);
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    .menu-sub-title {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--terra);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .menu-dual { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+
+    .menu-subsection {
+      margin-top: 24px;
+      padding-left: 24px;
+      border-left: 1px solid var(--blush);
+    }
+
+    .menu-subsection-title {
+      font-family: var(--font-serif);
+      font-size: 0.95rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--terra-light);
+      margin-bottom: 8px;
+    }
+
+    .menu-addon {
+      text-align: center;
+      margin-top: 28px;
+      padding: 16px 24px;
+      border: 1px solid var(--blush);
+      border-radius: 2px;
+    }
+
+    .menu-addon span {
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .menu-addon strong { color: var(--terra); font-weight: 500; }
+
+    /* ─── GALLERY ─── */
+    .gallery-section {
+      background: var(--terra);
+      padding: clamp(64px, 8vw, 96px) clamp(16px, 4vw, 48px);
+    }
+
+    .gallery-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .gallery-header .section-label { color: var(--blush); opacity: 0.5; }
+    .gallery-header .section-title { color: var(--blush); }
+    .gallery-header .section-divider { background: var(--blush); opacity: 0.3; margin: 0 auto 32px; }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto auto;
+      gap: 6px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .gallery-tile {
+      aspect-ratio: 1;
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.4s var(--ease-out);
+    }
+
+    .gallery-tile:hover { transform: scale(1.02); }
+
+    .gallery-tile.tall { grid-row: span 2; aspect-ratio: auto; }
+
+    .gallery-tile-inner {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-tile-inner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .gallery-tile:hover .gallery-tile-inner::before { opacity: 1; }
+
+    .gt-1 .gallery-tile-inner {
+      background: linear-gradient(145deg, #B86B5A 0%, #8B4332 100%);
+    }
+    .gt-1 .gallery-tile-inner::before {
+      background: linear-gradient(145deg, #C47A69 0%, #964537 100%);
+    }
+
+    .gt-2 .gallery-tile-inner {
+      background: linear-gradient(135deg, #D4A48F 0%, #B87A65 100%);
+    }
+    .gt-2 .gallery-tile-inner::before {
+      background: linear-gradient(135deg, #E0B5A2 0%, #C48B76 100%);
+    }
+
+    .gt-3 .gallery-tile-inner {
+      background: linear-gradient(160deg, #7A3628 0%, #5C2419 100%);
+    }
+    .gt-3 .gallery-tile-inner::before {
+      background: linear-gradient(160deg, #8B4332 0%, #6B3224 100%);
+    }
+
+    .gt-4 .gallery-tile-inner {
+      background: linear-gradient(140deg, #E5C0AD 0%, #D4A48F 100%);
+    }
+    .gt-4 .gallery-tile-inner::before {
+      background: linear-gradient(140deg, #F0D5C6 0%, #E0B5A2 100%);
+    }
+
+    .gt-5 .gallery-tile-inner {
+      background: linear-gradient(150deg, #A8564A 0%, #7A3628 100%);
+    }
+    .gt-5 .gallery-tile-inner::before {
+      background: linear-gradient(150deg, #B86B5A 0%, #8B4332 100%);
+    }
+
+    .gt-6 .gallery-tile-inner {
+      background: linear-gradient(130deg, #C4907B 0%, #A8564A 100%);
+    }
+    .gt-6 .gallery-tile-inner::before {
+      background: linear-gradient(130deg, #D4A48F 0%, #B86B5A 100%);
+    }
+
+    .gt-7 .gallery-tile-inner {
+      background: linear-gradient(155deg, #F0D5C6 0%, #E5C0AD 100%);
+    }
+    .gt-7 .gallery-tile-inner::before {
+      background: linear-gradient(155deg, #F5E6DC 0%, #F0D5C6 100%);
+    }
+
+    .gt-8 .gallery-tile-inner {
+      background: linear-gradient(145deg, #964537 0%, #6B3224 100%);
+    }
+    .gt-8 .gallery-tile-inner::before {
+      background: linear-gradient(145deg, #A8564A 0%, #7A3628 100%);
+    }
+
+    .gallery-tile-icon {
+      width: 32px; height: 32px;
+      margin-bottom: 12px;
+      opacity: 0.6;
+    }
+
+    .gallery-tile-icon svg {
+      width: 100%; height: 100%;
+      stroke-width: 1;
+      fill: none;
+    }
+
+    .gt-4 .gallery-tile-icon svg,
+    .gt-7 .gallery-tile-icon svg { stroke: var(--terra); }
+    .gt-1 .gallery-tile-icon svg, .gt-2 .gallery-tile-icon svg,
+    .gt-3 .gallery-tile-icon svg, .gt-5 .gallery-tile-icon svg,
+    .gt-6 .gallery-tile-icon svg, .gt-8 .gallery-tile-icon svg { stroke: var(--blush); }
+
+    .gallery-tile-label {
+      font-family: var(--font-serif);
+      font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+      font-weight: 300;
+      font-style: italic;
+      opacity: 0.8;
+    }
+
+    .gt-4 .gallery-tile-label, .gt-7 .gallery-tile-label { color: var(--terra); }
+    .gt-1 .gallery-tile-label, .gt-2 .gallery-tile-label,
+    .gt-3 .gallery-tile-label, .gt-5 .gallery-tile-label,
+    .gt-6 .gallery-tile-label, .gt-8 .gallery-tile-label { color: var(--blush); }
+
+    .gallery-cta {
+      text-align: center;
+      margin-top: 48px;
+    }
+
+    .gallery-cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 36px;
+      border: 1px solid var(--blush);
+      color: var(--blush);
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: all 0.25s ease;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 48px;
+    }
+
+    .gallery-cta a:hover {
+      background: var(--blush);
+      color: var(--terra);
+    }
+
+    /* ─── LOCATION ─── */
+    .location { background: var(--cream); }
+
+    .location-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      max-width: 1100px;
+      margin: 0 auto;
+      align-items: start;
+    }
+
+    .location-detail {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 20px;
+      align-items: flex-start;
+    }
+
+    .location-detail-icon {
+      width: 18px; height: 18px;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .location-detail-icon svg {
+      width: 100%; height: 100%;
+      stroke: var(--terra);
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    .location-detail-text {
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--text-dark);
+      font-weight: 300;
+    }
+
+    .location-detail-text strong {
+      display: block;
+      font-weight: 500;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .location-map {
+      border-radius: 4px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: var(--cream-warm);
+    }
+
+    .location-map iframe {
+      width: 100%; height: 100%;
+      border: 0;
+      filter: sepia(0.15) saturate(0.9);
+    }
+
+    .location-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 24px;
+      padding: 14px 32px;
+      background: var(--terra);
+      color: var(--blush-light);
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border-radius: 2px;
+      transition: all 0.25s ease;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 48px;
+    }
+
+    .location-cta:hover { background: var(--terra-deep); transform: translateY(-1px); }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      padding: 72px clamp(20px, 5vw, 48px) 40px;
+      padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+      text-align: center;
+      background: var(--terra-deep);
+    }
+
+    .footer-logo { width: clamp(120px, 20vw, 200px); height: auto; margin-bottom: 24px; }
+    .footer-logo { color: var(--blush); opacity: 0.6; }
+
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-bottom: 32px;
+    }
+
+    .footer-social a {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blush);
+      opacity: 0.4;
+      text-decoration: none;
+      transition: opacity 0.25s ease;
+      -webkit-tap-highlight-color: transparent;
+      padding: 8px;
+    }
+
+    .footer-social a:hover { opacity: 1; }
+
+    .footer-copy {
+      font-size: 0.6rem;
+      font-weight: 300;
+      color: var(--blush);
+      opacity: 0.2;
+      letter-spacing: 0.08em;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 0.8; }
+    }
+
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.7s ease, transform 0.7s var(--ease-out);
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+
+      .about-features { grid-template-columns: 1fr; gap: 32px; }
+      .menu-dual { grid-template-columns: 1fr; }
+      .menu-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-tile.tall { grid-row: span 1; aspect-ratio: 1; }
+      .location-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-logo { width: min(85vw, 320px); }
+      .gallery-grid { gap: 4px; }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+      .gallery-tile.tall { grid-row: span 1; aspect-ratio: 1; }
+    }
+
+    @media (hover: none) {
+      .menu-item:hover { padding-left: 0; background: none; }
+      .gallery-tile:hover { transform: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
+      .marquee { animation: none; }
+      .reveal { opacity: 1; transform: none; }
+      .menu-category { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MILLE SVG LOGO (reusable) -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <defs>
+      <symbol id="mille-logo" viewBox="0 0 400 120" fill="currentColor">
+        <!-- M -->
+        <path d="M10 110 L10 8 L12 8 L55 85 L98 8 L100 8 L100 110 L96 110 L96 18 L55 92 L53 92 L14 18 L14 110 Z"/>
+        <!-- i -->
+        <circle cx="127" cy="12" r="3.5"/>
+        <path d="M124.5 32 L129.5 32 L129.5 110 L124.5 110 Z"/>
+        <!-- l -->
+        <path d="M152 2 L157 2 L157 110 L152 110 Z"/>
+        <!-- l -->
+        <path d="M180 2 L185 2 L185 110 L180 110 Z"/>
+        <!-- e -->
+        <path d="M210 70 Q210 32 240 32 Q268 32 270 62 L270 67 L215 67 Q216 105 245 105 Q265 105 270 88 L274 90 Q268 110 244 110 Q210 110 210 70 Z M215 63 L265 63 Q264 36 240 36 Q216 36 215 63 Z"/>
+        <!-- THE DESSERT BAR text -->
+        <text x="200" y="138" font-family="'Josefin Sans', sans-serif" font-size="11" font-weight="300" letter-spacing="12" text-anchor="middle">THE DESSERT BAR</text>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="#" aria-label="Mille home">
+      <svg class="nav-logo-svg" viewBox="0 0 400 120" aria-hidden="true"><use href="#mille-logo"/></svg>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#location">Visit</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#about" onclick="closeMobileNav()">About</a>
+    <a href="#menu" onclick="closeMobileNav()">Menu</a>
+    <a href="#gallery" onclick="closeMobileNav()">Gallery</a>
+    <a href="#location" onclick="closeMobileNav()">Visit</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <svg class="hero-logo" viewBox="0 0 400 150" aria-label="Mille - The Dessert Bar"><use href="#mille-logo"/></svg>
+    <div class="hero-line"></div>
+    <div class="hero-tagline">Artisan Desserts &amp; Specialty Coffee</div>
+    <div class="hero-sub">Hyderabad</div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about reveal" id="about">
+    <div class="section-label">Our Story</div>
+    <div class="section-divider" style="margin:0 auto 32px"></div>
+    <p class="about-text">
+      At <em>Mille</em>, every layer tells a story. From hand-tempered chocolates
+      to slow-brewed pour overs, we craft each offering with precision and care &mdash;
+      a celebration of flavor, texture, and the art of slowing down.
+    </p>
+    <div class="about-features">
+      <div class="about-feature reveal">
+        <h3>Handcrafted</h3>
+        <p>Every dessert made fresh daily with premium ingredients and artisan technique</p>
+      </div>
+      <div class="about-feature reveal">
+        <h3>Specialty Coffee</h3>
+        <p>Single-origin pour overs and signature espresso drinks from curated estates</p>
+      </div>
+      <div class="about-feature reveal">
+        <h3>Chocolate Atelier</h3>
+        <p>Bean-to-bar hot chocolates in four intensities, from white to extra dark</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee">
+      <span class="marquee-item">Pastry</span><span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Chocolate</span><span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Coffee</span><span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Tea</span><span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Fresh Bakes</span><span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Slow Bar</span><span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Desserts</span><span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Pastry</span><span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Chocolate</span><span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Coffee</span><span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Tea</span><span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Fresh Bakes</span><span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Slow Bar</span><span class="marquee-dot">&bull;</span>
+      <span class="marquee-item">Desserts</span><span class="marquee-dot">&bull;</span>
+    </div>
+  </div>
+
+  <!-- MENU -->
+  <section class="menu-section" id="menu">
+    <div class="menu-header reveal">
+      <div class="section-label">Soft Launch</div>
+      <div class="section-title">Menu</div>
+      <div class="section-divider" style="margin:0 auto"></div>
+    </div>
+
+    <div class="menu-container">
+
+      <div class="menu-category" data-animate>
+        <div class="menu-category-header">
+          <h2 class="menu-category-name">Chocolate</h2>
+          <span class="menu-category-note">hot / cold</span>
+        </div>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">White</span><span class="menu-item-detail">21%</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Milk</span><span class="menu-item-detail">36%</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Dark</span><span class="menu-item-detail">58%</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Extra Dark</span><span class="menu-item-detail">70%</span></div>
+        </div>
+      </div>
+
+      <div class="menu-category" data-animate>
+        <div class="menu-category-header">
+          <h2 class="menu-category-name">Tea</h2>
+        </div>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Classic Green Tea</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Rose Chamomile</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Lavender</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Peppermint</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Peach Iced Tea</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Passion Fruit Iced Tea</span></div>
+        </div>
+      </div>
+
+      <div class="menu-category" data-animate>
+        <div class="menu-category-header">
+          <h2 class="menu-category-name">Coffee</h2>
+        </div>
+        <div class="menu-dual">
+          <div>
+            <h3 class="menu-sub-title">Black</h3>
+            <div class="menu-grid" style="grid-template-columns:1fr">
+              <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Espresso</span></div>
+              <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Espresso on the Rocks</span></div>
+              <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Americano</span></div>
+              <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Long Black</span></div>
+              <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Aerocano</span></div>
+            </div>
+          </div>
+          <div>
+            <h3 class="menu-sub-title">White</h3>
+            <div class="menu-grid" style="grid-template-columns:1fr">
+              <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Cortado</span></div>
+              <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Flat White</span></div>
+              <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Latte</span></div>
+              <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Cappuccino</span></div>
+              <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Mocha</span></div>
+              <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">OG Cold Coffee</span></div>
+              <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Vietnamese Coffee</span></div>
+              <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Cold Shaken Filter Coffee</span></div>
+              <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Toffee Cortado</span></div>
+              <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">White Mocha</span></div>
+              <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Vanilla Bean Latte</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="menu-subsection">
+          <div class="menu-subsection-title">Slow Bar &mdash; Pour Over</div>
+          <div class="menu-grid" style="grid-template-columns:1fr 1fr">
+            <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Salawara Estate</span></div>
+            <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Melkodige Estate</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-category" data-animate>
+        <div class="menu-category-header">
+          <h2 class="menu-category-name">Milk</h2>
+        </div>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Cereal Milk</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Cookie Dough Milk</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Creme Caramel Milk</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Dino Milo</span></div>
+        </div>
+        <div class="menu-addon">
+          <span>Add on : <strong>Matcha</strong> &nbsp;|&nbsp; <strong>Espresso</strong></span>
+        </div>
+      </div>
+
+      <div class="menu-category" data-animate>
+        <div class="menu-category-header">
+          <h2 class="menu-category-name">Fresh Bakes</h2>
+        </div>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Truffle Parmesan</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Chocochip Creme</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Portuguese Custard Tart</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Honey Butter Toast w/ Ice Cream</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Chocolate Almond Croissant</span></div>
+        </div>
+      </div>
+
+      <div class="menu-category" data-animate>
+        <div class="menu-category-header">
+          <h2 class="menu-category-name">Fresh on the Counter</h2>
+        </div>
+        <div class="menu-grid">
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Sticky Toffee Madeleines</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Hazelnut Layer Cake</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Malt Chocolate Cake</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Valrhona Choco Box</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">S'mores</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Flourless Chocolate</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Berry Mascarpone Choux Slice</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Vanilla Cheesecake</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Orange Olive Oil Slice</span></div>
+          <div class="menu-item"><div class="menu-item-dot"></div><span class="menu-item-name">Gluten Free Carrot Slice</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section" id="gallery">
+    <div class="gallery-header reveal">
+      <div class="section-label">From Our Kitchen</div>
+      <div class="section-title">Gallery</div>
+      <div class="section-divider"></div>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-tile tall gt-1 reveal"><div class="gallery-tile-inner">
+        <div class="gallery-tile-icon"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg></div>
+        <span class="gallery-tile-label">Specialty Coffee</span>
+      </div></div>
+      <div class="gallery-tile gt-2 reveal"><div class="gallery-tile-inner">
+        <div class="gallery-tile-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <span class="gallery-tile-label">Layer Cakes</span>
+      </div></div>
+      <div class="gallery-tile gt-3 reveal"><div class="gallery-tile-inner">
+        <div class="gallery-tile-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></div>
+        <span class="gallery-tile-label">Ambiance</span>
+      </div></div>
+      <div class="gallery-tile gt-4 reveal"><div class="gallery-tile-inner">
+        <div class="gallery-tile-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+        <span class="gallery-tile-label">Made with Love</span>
+      </div></div>
+      <div class="gallery-tile gt-5 reveal"><div class="gallery-tile-inner">
+        <div class="gallery-tile-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <span class="gallery-tile-label">Chocolate Atelier</span>
+      </div></div>
+      <div class="gallery-tile gt-6 reveal"><div class="gallery-tile-inner">
+        <div class="gallery-tile-icon"><svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg></div>
+        <span class="gallery-tile-label">Slow Bar</span>
+      </div></div>
+      <div class="gallery-tile gt-7 reveal"><div class="gallery-tile-inner">
+        <div class="gallery-tile-icon"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg></div>
+        <span class="gallery-tile-label">Fresh Bakes</span>
+      </div></div>
+      <div class="gallery-tile gt-8 reveal"><div class="gallery-tile-inner">
+        <div class="gallery-tile-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+        <span class="gallery-tile-label">The Experience</span>
+      </div></div>
+    </div>
+    <div class="gallery-cta reveal">
+      <a href="https://www.instagram.com/mille.dessertbar/" target="_blank" rel="noopener noreferrer">
+        Follow on Instagram
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="location reveal" id="location">
+    <div class="location-grid">
+      <div>
+        <div class="section-label">Find Us</div>
+        <div class="section-title">Visit Mille</div>
+        <div class="section-divider"></div>
+
+        <div class="location-detail">
+          <div class="location-detail-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="location-detail-text">
+            <strong>Address</strong>
+            BN Reddy Colony, Rai Durg<br>Hyderabad, Telangana, India
+          </div>
+        </div>
+
+        <div class="location-detail">
+          <div class="location-detail-icon">
+            <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="var(--terra)" stroke="none"/></svg>
+          </div>
+          <div class="location-detail-text">
+            <strong>Follow</strong>
+            @mille.dessertbar
+          </div>
+        </div>
+
+        <a class="location-cta" href="https://maps.app.goo.gl/nFUzBo8h9Z4Vqp8B9" target="_blank" rel="noopener noreferrer">
+          Get Directions
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="location-map">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3806.8!2d78.3953915!3d17.4253658!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb910004ad84ed%3A0xef82d126a6582a9d!2sMILLE%20-%20The%20Dessert%20Bar!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Mille - The Dessert Bar location">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <svg class="footer-logo" viewBox="0 0 400 150" aria-label="Mille"><use href="#mille-logo"/></svg>
+    <div class="footer-social">
+      <a href="https://www.instagram.com/mille.dessertbar/" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a href="https://maps.app.goo.gl/nFUzBo8h9Z4Vqp8B9" target="_blank" rel="noopener noreferrer">Google Maps</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 Mille &mdash; The Dessert Bar. All rights reserved.</p>
+  </footer>
+
+  <script>
+    (function() {
+      'use strict';
+
+      var nav = document.getElementById('nav');
+      window.addEventListener('scroll', function() {
+        nav.classList.toggle('scrolled', window.scrollY > 60);
+      }, { passive: true });
+
+      var navToggle = document.getElementById('navToggle');
+      var mobileNav = document.getElementById('mobileNav');
+      navToggle.addEventListener('click', function() {
+        mobileNav.classList.toggle('open');
+        document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+      });
+
+      window.closeMobileNav = function() {
+        mobileNav.classList.remove('open');
+        document.body.style.overflow = '';
+      };
+
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+
+      document.querySelectorAll('.reveal, [data-animate]').forEach(function(el) {
+        observer.observe(el);
+      });
+
+      document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          var href = link.getAttribute('href');
+          if (href === '#') return;
+          var target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            closeMobileNav();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    })();
+  </script>
+
+  <!-- Vercel Analytics -->
+  <script defer src="/_vercel/insights/script.js"></script>
+
+</body>
+</html>
