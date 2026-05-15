@@ -5,23 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Mille - The Dessert Bar</title>
   <meta name="description" content="Mille - The Dessert Bar. Artisan desserts, specialty coffee, and handcrafted chocolates in Hyderabad.">
-  <meta name="theme-color" content="#964537">
+  <meta name="theme-color" content="#832C22">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Josefin+Sans:wght@200;300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --terra: #964537;
-      --terra-deep: #7A3628;
-      --terra-light: #A8564A;
-      --blush: #E5C0AD;
-      --blush-light: #F0D5C6;
-      --blush-pale: #F5E6DC;
-      --cream: #FDF5EF;
-      --cream-warm: #F9EDE3;
-      --text-dark: #3A1810;
-      --text-muted: #B89A88;
+      --terra: #832C22;
+      --terra-deep: #6B211A;
+      --terra-light: #9A3F36;
+      --blush: #E4B1AB;
+      --blush-light: #ECB3AC;
+      --blush-pale: #F3D6D1;
+      --cream: #FFF4EF;
+      --cream-warm: #F9E3DC;
+      --text-dark: #35120D;
+      --text-muted: #A9847E;
 
       --font-display: 'Josefin Sans', 'Helvetica Neue', sans-serif;
       --font-serif: 'Cormorant Garamond', Georgia, serif;
@@ -65,15 +65,22 @@
     }
 
     .nav.scrolled {
-      background: rgba(150, 69, 55, 0.95);
+      background: rgba(131, 44, 34, 0.95);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       box-shadow: 0 2px 20px rgba(58, 24, 16, 0.15);
     }
 
-    .nav-logo-svg { height: 28px; width: auto; transition: all 0.4s ease; color: var(--blush); }
+    .nav-logo-svg {
+      display: block;
+      width: 74px;
+      height: 42px;
+      object-fit: cover;
+      object-position: 50% 42%;
+      transition: opacity 0.4s ease;
+    }
     .nav-logo-svg:hover { opacity: 0.8; }
-    .nav:not(.scrolled) .nav-logo-svg { color: var(--terra); }
+    .nav:not(.scrolled) .nav-logo-svg { color: var(--blush); }
     .nav.scrolled .nav-logo-svg { color: var(--blush); }
 
     .nav-links { display: flex; gap: 32px; list-style: none; }
@@ -92,7 +99,7 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    .nav:not(.scrolled) .nav-links a { color: var(--terra); }
+    .nav:not(.scrolled) .nav-links a { color: var(--blush); }
     .nav.scrolled .nav-links a { color: var(--blush); }
 
     .nav-links a::after {
@@ -103,7 +110,7 @@
       transition: width 0.3s ease;
     }
 
-    .nav:not(.scrolled) .nav-links a::after { background: var(--terra); }
+    .nav:not(.scrolled) .nav-links a::after { background: var(--blush); }
     .nav.scrolled .nav-links a::after { background: var(--blush); }
     .nav-links a:hover::after { width: 100%; }
 
@@ -127,7 +134,7 @@
       transition: all 0.3s ease;
     }
 
-    .nav:not(.scrolled) .nav-toggle span { background: var(--terra); }
+    .nav:not(.scrolled) .nav-toggle span { background: var(--blush); }
     .nav.scrolled .nav-toggle span { background: var(--blush); }
 
     .mobile-nav {
@@ -176,78 +183,18 @@
       content: '';
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(ellipse at 30% 40%, rgba(229, 192, 173, 0.06) 0%, transparent 50%),
-        radial-gradient(ellipse at 70% 60%, rgba(229, 192, 173, 0.04) 0%, transparent 50%);
+      background: none;
       pointer-events: none;
     }
 
     .hero-logo {
-      width: clamp(280px, 55vw, 600px);
+      display: block;
+      width: min(86vw, 112vh, 1240px);
       height: auto;
+      object-fit: contain;
       opacity: 0;
       transform: translateY(25px);
       animation: fadeUp 1.2s var(--ease-out) 0.3s forwards;
-    }
-
-    .hero-logo { color: var(--blush); }
-
-    .hero-line {
-      width: 50px; height: 1px;
-      background: var(--blush);
-      margin: 32px 0 24px;
-      opacity: 0;
-      animation: fadeUp 1s ease 0.8s forwards;
-    }
-
-    .hero-tagline {
-      font-family: var(--font-display);
-      font-size: clamp(0.65rem, 1.2vw, 0.8rem);
-      font-weight: 300;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--blush);
-      opacity: 0.7;
-      opacity: 0;
-      animation: fadeUp 1s ease 1s forwards;
-    }
-
-    .hero-sub {
-      font-family: var(--font-serif);
-      font-size: clamp(1rem, 2vw, 1.3rem);
-      font-weight: 300;
-      font-style: italic;
-      color: var(--blush-light);
-      margin-top: 20px;
-      opacity: 0;
-      animation: fadeUp 1s ease 1.2s forwards;
-    }
-
-    .hero-scroll {
-      position: absolute;
-      bottom: clamp(24px, 4vh, 48px);
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      opacity: 0;
-      animation: fadeUp 1s ease 1.6s forwards;
-    }
-
-    .hero-scroll span {
-      font-size: 0.55rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--blush);
-      opacity: 0.5;
-    }
-
-    .hero-scroll .scroll-line {
-      width: 1px; height: 36px;
-      background: linear-gradient(to bottom, var(--blush), transparent);
-      animation: scrollPulse 2.5s ease infinite;
     }
 
     /* ─── SECTIONS ─── */
@@ -412,7 +359,7 @@
 
     .menu-item:hover {
       padding-left: 12px;
-      background: rgba(150, 69, 55, 0.04);
+      background: rgba(131, 44, 34, 0.04);
     }
 
     .menu-item-dot {
@@ -546,59 +493,59 @@
     .gallery-tile:hover .gallery-tile-inner::before { opacity: 1; }
 
     .gt-1 .gallery-tile-inner {
-      background: linear-gradient(145deg, #B86B5A 0%, #8B4332 100%);
+      background: linear-gradient(145deg, #9A3F36 0%, #73251D 100%);
     }
     .gt-1 .gallery-tile-inner::before {
-      background: linear-gradient(145deg, #C47A69 0%, #964537 100%);
+      background: linear-gradient(145deg, #AA4B42 0%, #832C22 100%);
     }
 
     .gt-2 .gallery-tile-inner {
-      background: linear-gradient(135deg, #D4A48F 0%, #B87A65 100%);
+      background: linear-gradient(135deg, #E4B1AB 0%, #C57A72 100%);
     }
     .gt-2 .gallery-tile-inner::before {
-      background: linear-gradient(135deg, #E0B5A2 0%, #C48B76 100%);
+      background: linear-gradient(135deg, #ECB3AC 0%, #D4968A 100%);
     }
 
     .gt-3 .gallery-tile-inner {
-      background: linear-gradient(160deg, #7A3628 0%, #5C2419 100%);
+      background: linear-gradient(160deg, #6B211A 0%, #4E1712 100%);
     }
     .gt-3 .gallery-tile-inner::before {
-      background: linear-gradient(160deg, #8B4332 0%, #6B3224 100%);
+      background: linear-gradient(160deg, #832C22 0%, #5F1D17 100%);
     }
 
     .gt-4 .gallery-tile-inner {
-      background: linear-gradient(140deg, #E5C0AD 0%, #D4A48F 100%);
+      background: linear-gradient(140deg, #E4B1AB 0%, #D4968A 100%);
     }
     .gt-4 .gallery-tile-inner::before {
-      background: linear-gradient(140deg, #F0D5C6 0%, #E0B5A2 100%);
+      background: linear-gradient(140deg, #ECB3AC 0%, #E7B6B0 100%);
     }
 
     .gt-5 .gallery-tile-inner {
-      background: linear-gradient(150deg, #A8564A 0%, #7A3628 100%);
+      background: linear-gradient(150deg, #9A3F36 0%, #6B211A 100%);
     }
     .gt-5 .gallery-tile-inner::before {
-      background: linear-gradient(150deg, #B86B5A 0%, #8B4332 100%);
+      background: linear-gradient(150deg, #AA4B42 0%, #832C22 100%);
     }
 
     .gt-6 .gallery-tile-inner {
-      background: linear-gradient(130deg, #C4907B 0%, #A8564A 100%);
+      background: linear-gradient(130deg, #D4968A 0%, #9A3F36 100%);
     }
     .gt-6 .gallery-tile-inner::before {
-      background: linear-gradient(130deg, #D4A48F 0%, #B86B5A 100%);
+      background: linear-gradient(130deg, #E7B6B0 0%, #AA4B42 100%);
     }
 
     .gt-7 .gallery-tile-inner {
-      background: linear-gradient(155deg, #F0D5C6 0%, #E5C0AD 100%);
+      background: linear-gradient(155deg, #ECB3AC 0%, #E4B1AB 100%);
     }
     .gt-7 .gallery-tile-inner::before {
-      background: linear-gradient(155deg, #F5E6DC 0%, #F0D5C6 100%);
+      background: linear-gradient(155deg, #F3D6D1 0%, #ECB3AC 100%);
     }
 
     .gt-8 .gallery-tile-inner {
-      background: linear-gradient(145deg, #964537 0%, #6B3224 100%);
+      background: linear-gradient(145deg, #832C22 0%, #5F1D17 100%);
     }
     .gt-8 .gallery-tile-inner::before {
-      background: linear-gradient(145deg, #A8564A 0%, #7A3628 100%);
+      background: linear-gradient(145deg, #9A3F36 0%, #6B211A 100%);
     }
 
     .gallery-tile-icon {
@@ -753,8 +700,13 @@
       background: var(--terra-deep);
     }
 
-    .footer-logo { width: clamp(120px, 20vw, 200px); height: auto; margin-bottom: 24px; }
-    .footer-logo { color: var(--blush); opacity: 0.6; }
+    .footer-logo {
+      display: block;
+      width: clamp(160px, 26vw, 280px);
+      height: auto;
+      margin: 0 auto 24px;
+      opacity: 0.7;
+    }
 
     .footer-social {
       display: flex;
@@ -793,11 +745,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.2; }
-      50% { opacity: 0.8; }
-    }
-
     @keyframes marqueeScroll {
       from { transform: translateX(0); }
       to { transform: translateX(-50%); }
@@ -825,7 +772,7 @@
     }
 
     @media (max-width: 480px) {
-      .hero-logo { width: min(85vw, 320px); }
+      .hero-logo { width: min(118vw, 560px); }
       .gallery-grid { gap: 4px; }
     }
 
@@ -853,31 +800,10 @@
 </head>
 <body>
 
-  <!-- MILLE SVG LOGO (reusable) -->
-  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-    <defs>
-      <symbol id="mille-logo" viewBox="0 0 400 120" fill="currentColor">
-        <!-- M -->
-        <path d="M10 110 L10 8 L12 8 L55 85 L98 8 L100 8 L100 110 L96 110 L96 18 L55 92 L53 92 L14 18 L14 110 Z"/>
-        <!-- i -->
-        <circle cx="127" cy="12" r="3.5"/>
-        <path d="M124.5 32 L129.5 32 L129.5 110 L124.5 110 Z"/>
-        <!-- l -->
-        <path d="M152 2 L157 2 L157 110 L152 110 Z"/>
-        <!-- l -->
-        <path d="M180 2 L185 2 L185 110 L180 110 Z"/>
-        <!-- e -->
-        <path d="M210 70 Q210 32 240 32 Q268 32 270 62 L270 67 L215 67 Q216 105 245 105 Q265 105 270 88 L274 90 Q268 110 244 110 Q210 110 210 70 Z M215 63 L265 63 Q264 36 240 36 Q216 36 215 63 Z"/>
-        <!-- THE DESSERT BAR text -->
-        <text x="200" y="138" font-family="'Josefin Sans', sans-serif" font-size="11" font-weight="300" letter-spacing="12" text-anchor="middle">THE DESSERT BAR</text>
-      </symbol>
-    </defs>
-  </svg>
-
   <!-- NAV -->
   <nav class="nav" id="nav">
     <a href="#" aria-label="Mille home">
-      <svg class="nav-logo-svg" viewBox="0 0 400 120" aria-hidden="true"><use href="#mille-logo"/></svg>
+      <img class="nav-logo-svg" src="assets/mille-logo-reference.svg" alt="" aria-hidden="true">
     </a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
@@ -899,14 +825,7 @@
 
   <!-- HERO -->
   <section class="hero" id="hero">
-    <svg class="hero-logo" viewBox="0 0 400 150" aria-label="Mille - The Dessert Bar"><use href="#mille-logo"/></svg>
-    <div class="hero-line"></div>
-    <div class="hero-tagline">Artisan Desserts &amp; Specialty Coffee</div>
-    <div class="hero-sub">Hyderabad</div>
-    <div class="hero-scroll">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
+    <img class="hero-logo" src="assets/mille-logo-reference.svg" alt="Mille - The Dessert Bar">
   </section>
 
   <!-- ABOUT -->
@@ -1178,7 +1097,7 @@
 
   <!-- FOOTER -->
   <footer class="footer">
-    <svg class="footer-logo" viewBox="0 0 400 150" aria-label="Mille"><use href="#mille-logo"/></svg>
+    <img class="footer-logo" src="assets/mille-logo-reference.svg" alt="Mille - The Dessert Bar">
     <div class="footer-social">
       <a href="https://www.instagram.com/mille.dessertbar/" target="_blank" rel="noopener noreferrer">Instagram</a>
       <a href="https://maps.app.goo.gl/nFUzBo8h9Z4Vqp8B9" target="_blank" rel="noopener noreferrer">Google Maps</a>
